@@ -1,3 +1,11 @@
+/**
+ * index.js
+ * @description This is a basic example of how the checkout works according to challenge
+ * specifications. All logic is in ./src & all unit tests are in ./test
+ * @type {Checkout}
+ */
+
+
 const Checkout = require('./src/checkout');
 const catalogue = require('./src/catalogue');
 
