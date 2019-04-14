@@ -86,9 +86,8 @@ class Checkout {
    * @description All pricing & specials calculations are done here, This works by first loading a
    * helper class SpecialFunctions, then going through all the saved items and comparing it to
    * the pricing catalogue. If a special is found for that product the respective special function
-   * is called. Per item pricing will be calculated first with standard price * qty, however if a
-   * special function has a specialPrice returned then the per item pricing will be overwritten.
-   * Finally this will do summation of all item pricing.
+   * is called. As none of the specials require advanced logic changes to the payment calculation,
+   * we can simply run the special functions than do per-item summation post specials.
    * @return {number} The grand total price of this checkout transaction.
    */
   total() {
@@ -102,17 +101,18 @@ class Checkout {
      this is a vanilla project. Also making a prototype for this would pollute Object.
      */
     Object.keys(this.items).forEach((itemSKU) => {
-      const item = this.pricingRules.find(pricingRule => pricingRule.sku === itemSKU);
+      const { special } = this.pricingRules.find(pricingRule => pricingRule.sku === itemSKU);
 
-      // first run a basic cost calculation. Will be overwritten if a special is applied.
-      let itemTotalPrice = item.price * this.getItemQty(itemSKU);
-      if (item.special) {
-        const { specialPrice } = specialFunctions[item.special.type](itemSKU, item.special);
-        if (specialPrice) itemTotalPrice = specialPrice;
+      // If a special exists for this item, we will let it run & adjust the params of checkout
+      if (special) {
+        specialFunctions[special.type](itemSKU, special);
       }
 
-      // Round to remove FP errors, add to grand total
-      itemTotalPrice = round(itemTotalPrice, 2);
+      // Calculate the price by multiplying the item unit price by the qty. We will use the
+      // saved item unit price as that may change with special conditions
+      const itemTotalPrice = round(this.items[itemSKU].unitPrice * this.getItemQty(itemSKU), 2);
+
+
       grandTotalPrice += itemTotalPrice;
 
       // Push changes to the item object
@@ -122,14 +122,17 @@ class Checkout {
       });
     });
 
-    if (this.verbose) this.pricingBreakdown(grandTotalPrice);
+    if (this.verbose) {
+      this.pricingBreakdown(grandTotalPrice);
+    }
 
     return grandTotalPrice;
   }
 
   /**
    * pricingBreakdown
-   * @description Purely to show a per item breakdown for anyone running this script.
+   * @description Purely to show a per item breakdown for anyone running this script. Generally a
+   * logging framework like Winston would manage this.
    * @param grandTotalPrice {number}
    */
   pricingBreakdown(grandTotalPrice) {

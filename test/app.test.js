@@ -28,7 +28,8 @@ describe('Test Application', () => {
       },
     });
 
-    expect(co.total()).toBe(358.5);
+    const total = co.total();
+    expect(total).toBe(249);
 
     expect(co.items).toEqual({
       atv: {
@@ -36,7 +37,7 @@ describe('Test Application', () => {
         qty: 2,
         unitPrice: 109.5,
         freeQty: 1,
-        totalPrice: 328.5,
+        totalPrice: 219,
         totalQty: 3,
       },
       vga: {

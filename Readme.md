@@ -14,7 +14,7 @@ catalogue had the functions embedded into it as its possible for mongo to store 
 as your basically sql-injecting yourself. So I opted for a function flag method that would communicate with a helper system
 using deconstructors for case specific information.
 
-Next I created the actual checkout class and the standardization which I base the rest of the app. Originally as I was trying
+Next I created the checkout class and the standardization which I base the rest of the app. Originally as I was trying
 replicate database style CRUD, history would be managed in an array however it seemed fine to use an object and ramload this
 data as it's very low volume (this dramatically reduced the amount of array lookups required).
 
@@ -22,8 +22,8 @@ Once standardization was accomplished in checkout I extended it to the Specials 
 class inheritance to manage the connection between checkout & specials however it seemed counter-intuitive compared to a 
 simple and more atomic specials helper class. Once all this was established writing the specials was a breeze.
 
-Helpers were abstracted into its own file as it didn't seem to have a place inside the context of the Checkout class
-(does not require *this*)
+Helpers functions such as round were abstracted into its own file as it didn't seem to have a place inside the context of
+the Checkout class (does not require *this*)
 
 ## Testing
 Used Jest framework to test the classes results and items

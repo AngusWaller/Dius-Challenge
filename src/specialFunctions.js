@@ -19,17 +19,16 @@ class SpecialFunctions {
    * to be met
    * @param discountedUnitPrice { number } A float that contains what we will adjust the perUnit
    * cost to
-   * @return {{specialPrice: number}|{}} If the conditions for execution are met, we will write
+   * @return {{}} If the conditions for execution are met, we will write
    * the price here. Otherwise we will return an empty obj for destructure
    */
 
   priceDiscount(itemSKU, { discountQty, discountedUnitPrice }) {
-    const item = this.Checkout.items[itemSKU];
+    const qty = this.Checkout.getItemQty(itemSKU);
 
-    if (item.qty > discountQty) {
-      return { specialPrice: discountedUnitPrice * item.qty };
+    if (qty > discountQty) {
+      this.Checkout.items[itemSKU].unitPrice = discountedUnitPrice;
     }
-    return {};
   }
 
   /**
@@ -57,8 +56,6 @@ class SpecialFunctions {
     // money
     this.Checkout.items[targetSKU].qty = this.Checkout.getItemQty(targetSKU) - qty;
     if (this.Checkout.items[targetSKU].qty < 0) this.Checkout.items[targetSKU].qty = 0;
-
-    return {};
   }
 
   /**
@@ -77,8 +74,6 @@ class SpecialFunctions {
       this.Checkout.items[itemSKU].qty -= discountQtyVolume;
       this.Checkout.items[itemSKU].freeQty = discountQtyVolume;
     }
-
-    return {};
   }
 }
 
