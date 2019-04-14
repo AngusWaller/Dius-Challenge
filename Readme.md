@@ -29,7 +29,7 @@ the Checkout class (does not require *this*)
 Used Jest framework to test the classes results and items
 
 I got a little caught up in the wording of `the brand new Super iPad will have a bulk discounted applied, where the price 
-will drop to $499.99 each, if someone buys more than 4` originally I thought that it meant that the first 4 were fill price
+will drop to $499.99 each, if someone buys more than 4` originally I thought that it meant that the first 4 were full price
 and the subsequent items are at a discounted price. 
 
 Also the wording `we will bundle in a free VGA adapter free of charge with every MacBook Pro sold` seemed to be saying that
