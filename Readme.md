@@ -39,3 +39,5 @@ a VGA to pay then scan a MBP it will make the VGA free.
 ## Time
 This took about 3.5 hours to do, about 2.5 hours of programming & 1 hour of debugging (as I got caught on some wording 
 issues).
+
+Also the next day I quickly checked the readme to ensure I didn't skip anything, I spent about 10 minutes refining logic and making example 1 test with the correct totals. 
