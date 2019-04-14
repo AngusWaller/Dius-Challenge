@@ -9,8 +9,10 @@
 const Checkout = require('./src/checkout');
 const catalogue = require('./src/catalogue');
 
-// Using the formatting prescribed in the test
-const co = new Checkout(catalogue);
+const verbose = true;
+
+// Note that verbose is an optional param and will simply give us a log of the product breakdown
+const co = new Checkout(catalogue, verbose);
 co.scan('atv');
 co.scan('atv');
 co.scan('atv');
@@ -18,7 +20,7 @@ co.scan('vga');
 co.total();
 
 // Using shorthand
-new Checkout(catalogue)
+new Checkout(catalogue, verbose)
   .scan('atv')
   .scan('ipd')
   .scan('ipd')
@@ -28,7 +30,7 @@ new Checkout(catalogue)
   .scan('ipd')
   .total();
 
-new Checkout(catalogue, true)
+new Checkout(catalogue, verbose)
   .scan('mbp')
   .scan('vga')
   .scan('ipd')
